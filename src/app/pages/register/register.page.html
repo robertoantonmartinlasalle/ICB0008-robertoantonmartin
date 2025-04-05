@@ -6,6 +6,8 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+    <!-- Email -->
     <ion-item>
       <ion-label position="floating">Email</ion-label>
       <ion-input type="email" formControlName="email"></ion-input>
@@ -14,6 +16,7 @@
       <p>Email no válido</p>
     </ion-text>
 
+    <!-- Contraseña -->
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
@@ -22,7 +25,19 @@
       <p>La contraseña debe tener mínimo 6 caracteres</p>
     </ion-text>
 
-    <ion-button expand="block" type="submit" class="ion-margin-top">Registrarse</ion-button>
-    <ion-button expand="block" fill="clear" routerLink="/login">¿Ya tienes cuenta? Inicia sesión</ion-button>
+    <!-- Botón de registro -->
+    <ion-button expand="block" type="submit" class="ion-margin-top">
+      Registrarse
+    </ion-button>
+
+    <!-- Mensaje de error general -->
+    <ion-text color="danger" *ngIf="mostrarError && mensajeError">
+      <p class="ion-text-center">{{ mensajeError }}</p>
+    </ion-text>
+
+    <!-- Enlace para volver al login -->
+    <ion-button expand="block" fill="clear" (click)="irALogin()">
+      ¿Ya tienes cuenta? Inicia sesión
+    </ion-button>
   </form>
 </ion-content>
