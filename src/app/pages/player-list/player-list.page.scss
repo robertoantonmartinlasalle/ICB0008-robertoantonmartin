@@ -1,0 +1,52 @@
+// Estilo oscuro tipo terminal para lista de jugadores
+ion-header {
+    --background: #0d0d0d;
+    --color: #00ff99;
+    border-bottom: 1px solid #00ff99;
+    box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1);
+  }
+  
+  ion-toolbar {
+    --background: #0d0d0d !important;
+    color: #00ff99;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+  }
+  
+  ion-title {
+    color: #00ff99;
+    text-shadow: 0 0 4px #00ff99;
+    text-transform: uppercase;
+    padding-left: 8px;
+  }
+  
+  ion-content {
+    --background: #0d0d0d;
+    color: #00ff99;
+    font-family: 'Courier New', monospace;
+  }
+  
+  ion-list {
+    margin: 0 16px;
+    border: 1px solid #00ff99;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #121212;
+  }
+  
+  ion-item {
+    --background: #1a1a1a;
+    color: #00ff99;
+    border-bottom: 1px solid #00ff99;
+    font-weight: 500;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .spinner {
+    display: block;
+    margin: 32px auto;
+    color: #00ff99;
+  }
+  

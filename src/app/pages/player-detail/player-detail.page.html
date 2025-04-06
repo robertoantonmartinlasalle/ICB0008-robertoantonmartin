@@ -1,13 +1,31 @@
-<ion-header [translucent]="true">
+<!--
+  Componente: Detalle de Jugador
+  Muestra los datos individuales de un jugador usando el ID recibido por queryParams.
+-->
+
+<ion-header>
   <ion-toolbar>
-    <ion-title>player-detail</ion-title>
+    <ion-title>Detalle del Jugador</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">player-detail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="contenido">
+    <!-- Spinner mientras se cargan los datos -->
+    <ion-spinner name="dots" *ngIf="cargando" class="spinner"></ion-spinner>
+
+    <!-- Si ya hay datos del jugador -->
+    <div *ngIf="!cargando && jugador">
+      <h2>{{ jugador.first_name }} {{ jugador.last_name }}</h2>
+      <p><strong>Equipo:</strong> {{ jugador.team.full_name }}</p>
+      <p><strong>Posición:</strong> {{ jugador.position || 'No especificada' }}</p>
+      <p><strong>Altura:</strong> {{ jugador.height_feet || '-' }} pies {{ jugador.height_inches || '' }} pulgadas</p>
+      <p><strong>Peso:</strong> {{ jugador.weight_pounds || '-' }} lbs</p>
+    </div>
+
+    <!-- Si no se encontraron datos -->
+    <div *ngIf="!cargando && !jugador">
+      <p>No se encontró el jugador.</p>
+    </div>
+  </div>
 </ion-content>

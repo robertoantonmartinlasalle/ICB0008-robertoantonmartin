@@ -3,16 +3,16 @@
 // ------------------------
 
 ion-header {
-  --background: #0d0d0d; // Fondo completamente negro
-  --color: #00ff99; // Verde neón para el texto
-  border-bottom: 1px solid #00ff99; // Línea inferior verde
-  box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1); // Sombra suave
+  --background: #0d0d0d;
+  --color: #00ff99;
+  border-bottom: 1px solid #00ff99;
+  box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1);
 }
 
 ion-toolbar {
-  --background: #0d0d0d !important; // Forzamos fondo oscuro real
+  --background: #0d0d0d !important;
   --color: #00ff99;
-  font-family: 'Courier New', monospace; // Tipografía tipo terminal
+  font-family: 'Courier New', monospace;
   font-weight: bold;
   font-size: 20px;
   letter-spacing: 0.5px;
@@ -21,55 +21,70 @@ ion-toolbar {
 
 ion-title {
   color: #00ff99;
-  text-shadow: 0 0 4px #00ff99; // Efecto glow
+  text-shadow: 0 0 4px #00ff99;
   text-transform: uppercase;
   padding-left: 8px;
 }
-
 
 // ------------------------
 // CUERPO ESTILO TERMINAL
 // ------------------------
 
 ion-content {
-  --background: #0d0d0d; // Fondo negro
+  --background: #0d0d0d;
+
+  // Solución para evitar fondo blanco en Android
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  font-family: 'Courier New', monospace;
+  color: #00ff99;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.contenido {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: 'Courier New', monospace;
-  color: #00ff99;
 }
 
 // Contenedor del formulario
 .form-wrapper {
-  padding: 24px 16px;
-  background-color: #1a1a1a; // Gris muy oscuro
+  background-color: #1a1a1a;
   border-radius: 16px;
-  margin: 32px 16px;
+  margin: 24px auto;
+  padding: 24px 16px;
   box-shadow: 0 4px 15px rgba(0, 255, 153, 0.1);
-  border: 1px solid #00ff99; // Borde verde neón
+  border: 1px solid #00ff99;
+  width: 100%;
+  max-width: 400px;
 }
 
 // Zona del botón de registro
 .registro-wrapper {
-  padding: 16px;
+  margin-top: 16px;
   text-align: center;
+  padding: 16px;
   background-color: #121212;
   border-top: 1px solid #00ff99;
+  border-radius: 12px;
 }
 
-// Formulario en columna
+// Formulario
 form {
   display: flex;
   flex-direction: column;
 }
 
-// Cada grupo de campo (label + input)
+// Cada grupo de campo
 .input-group {
   margin-bottom: 20px;
 }
 
-// Etiquetas "Email" y "Contraseña"
+// Etiquetas
 label {
   font-size: 14px;
   color: #00ff99;
@@ -78,7 +93,7 @@ label {
   display: block;
 }
 
-// Estilo visual del contenedor del input
+// Contenedor del input
 ion-item {
   --background: #262626;
   --border-radius: 10px;
@@ -86,40 +101,37 @@ ion-item {
   --inner-padding-end: 8px;
   box-shadow: 0 0 4px rgba(0, 255, 153, 0.2);
   border: 1px solid #00ff99;
+  margin: 0;
 }
 
-// Input dentro del ion-item
+// Input
 .styled-input {
-  flex: 1;
-  padding: 12px 8px;
   font-size: 16px;
   background: transparent;
   border: none;
   outline: none;
   color: #00ff99;
   width: 100%;
+  padding: 12px 8px;
 }
-
 
 // ------------------------
 // BOTONES ESTILO HACKER
 // ------------------------
 
-// Botón "Entrar"
 .login-btn {
   margin-top: 16px;
-  --background: linear-gradient(to right, #00ff99, #009966); // Degradado brillante
-  color: #062776; 
+  --background: linear-gradient(to right, #00ff99, #009966);
+  color: #062776;
   font-weight: bold;
-  font-size: 18px; // Más legible en móvil
+  font-size: 18px;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0, 255, 153, 0.4); // Glow externo
+  box-shadow: 0 3px 10px rgba(0, 255, 153, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  text-shadow: 0 1px 0 #00cc77; // Sombra inferior suave para visibilidad
+  text-shadow: 0 1px 0 #00cc77;
 }
 
-// Botón de "¿No tienes cuenta?"
 .registro-btn {
   font-size: 0.95rem;
   color: #00ff99;
