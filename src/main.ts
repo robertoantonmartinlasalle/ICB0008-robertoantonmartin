@@ -8,13 +8,19 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// 🟢 Importamos Keyboard desde Capacitor
+import { Keyboard } from '@capacitor/keyboard';
+
+// 🟢 Lanzamos la app con providers
 bootstrapApplication(AppComponent, {
   providers: [
     provideIonicAngular(),
     provideRouter(routes),
     provideHttpClient(),
     provideAnimations(),
-    // ⚠️ IMPORTANTE: sin esto no funcionarán los formularios
     importProvidersFrom(FormsModule, ReactiveFormsModule)
   ],
+}).then(() => {
+  // ✅ Configuramos el comportamiento del teclado solo en dispositivos compatibles
+  Keyboard.setScroll({ isDisabled: false });
 });

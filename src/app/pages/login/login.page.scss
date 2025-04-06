@@ -1,0 +1,128 @@
+// ------------------------
+// CABECERA OSCURA TOTAL
+// ------------------------
+
+ion-header {
+  --background: #0d0d0d; // Fondo completamente negro
+  --color: #00ff99; // Verde neón para el texto
+  border-bottom: 1px solid #00ff99; // Línea inferior verde
+  box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1); // Sombra suave
+}
+
+ion-toolbar {
+  --background: #0d0d0d !important; // Forzamos fondo oscuro real
+  --color: #00ff99;
+  font-family: 'Courier New', monospace; // Tipografía tipo terminal
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  color: #00ff99;
+}
+
+ion-title {
+  color: #00ff99;
+  text-shadow: 0 0 4px #00ff99; // Efecto glow
+  text-transform: uppercase;
+  padding-left: 8px;
+}
+
+
+// ------------------------
+// CUERPO ESTILO TERMINAL
+// ------------------------
+
+ion-content {
+  --background: #0d0d0d; // Fondo negro
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Courier New', monospace;
+  color: #00ff99;
+}
+
+// Contenedor del formulario
+.form-wrapper {
+  padding: 24px 16px;
+  background-color: #1a1a1a; // Gris muy oscuro
+  border-radius: 16px;
+  margin: 32px 16px;
+  box-shadow: 0 4px 15px rgba(0, 255, 153, 0.1);
+  border: 1px solid #00ff99; // Borde verde neón
+}
+
+// Zona del botón de registro
+.registro-wrapper {
+  padding: 16px;
+  text-align: center;
+  background-color: #121212;
+  border-top: 1px solid #00ff99;
+}
+
+// Formulario en columna
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+// Cada grupo de campo (label + input)
+.input-group {
+  margin-bottom: 20px;
+}
+
+// Etiquetas "Email" y "Contraseña"
+label {
+  font-size: 14px;
+  color: #00ff99;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+// Estilo visual del contenedor del input
+ion-item {
+  --background: #262626;
+  --border-radius: 10px;
+  --padding-start: 8px;
+  --inner-padding-end: 8px;
+  box-shadow: 0 0 4px rgba(0, 255, 153, 0.2);
+  border: 1px solid #00ff99;
+}
+
+// Input dentro del ion-item
+.styled-input {
+  flex: 1;
+  padding: 12px 8px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #00ff99;
+  width: 100%;
+}
+
+
+// ------------------------
+// BOTONES ESTILO HACKER
+// ------------------------
+
+// Botón "Entrar"
+.login-btn {
+  margin-top: 16px;
+  --background: linear-gradient(to right, #00ff99, #009966); // Degradado brillante
+  color: #062776; 
+  font-weight: bold;
+  font-size: 18px; // Más legible en móvil
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 255, 153, 0.4); // Glow externo
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 #00cc77; // Sombra inferior suave para visibilidad
+}
+
+// Botón de "¿No tienes cuenta?"
+.registro-btn {
+  font-size: 0.95rem;
+  color: #00ff99;
+  font-weight: 600;
+  text-transform: uppercase;
+}

@@ -1,0 +1,119 @@
+// ------------------------
+// CABECERA OSCURA
+// ------------------------
+
+ion-header {
+  --background: #0d0d0d;
+  --color: #00ff99;
+  border-bottom: 1px solid #00ff99;
+  box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1);
+}
+
+ion-toolbar {
+  --background: #0d0d0d !important;
+  --color: #00ff99;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  color: #00ff99;
+}
+
+ion-title {
+  color: #00ff99;
+  text-shadow: 0 0 4px #00ff99;
+  text-transform: uppercase;
+  padding-left: 8px;
+}
+
+
+// ------------------------
+// CUERPO TERMINAL
+// ------------------------
+
+ion-content {
+  --background: #0d0d0d;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Courier New', monospace;
+  color: #00ff99;
+}
+
+.form-wrapper {
+  padding: 24px 16px;
+  background-color: #1a1a1a;
+  border-radius: 16px;
+  margin: 32px 16px;
+  box-shadow: 0 4px 15px rgba(0, 255, 153, 0.1);
+  border: 1px solid #00ff99;
+}
+
+.registro-wrapper {
+  padding: 16px;
+  text-align: center;
+  background-color: #121212;
+  border-top: 1px solid #00ff99;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 14px;
+  color: #00ff99;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+ion-item {
+  --background: #262626;
+  --border-radius: 10px;
+  --padding-start: 8px;
+  --inner-padding-end: 8px;
+  box-shadow: 0 0 4px rgba(0, 255, 153, 0.2);
+  border: 1px solid #00ff99;
+}
+
+.styled-input {
+  flex: 1;
+  padding: 12px 8px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #00ff99;
+  width: 100%;
+}
+
+
+// ------------------------
+// BOTONES
+// ------------------------
+
+.login-btn {
+  margin-top: 16px;
+  --background: linear-gradient(to right, #00ff99, #009966);
+  color: #062776;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 255, 153, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 #00cc77;
+}
+
+.registro-btn {
+  font-size: 0.95rem;
+  color: #00ff99;
+  font-weight: 600;
+  text-transform: uppercase;
+}

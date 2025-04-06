@@ -1,48 +1,62 @@
+<!--
+  Componente: Login
+  Este formulario permite al usuario iniciar sesión introduciendo su email y contraseña.
+  El botón de "Entrar" está vinculado directamente al método onLogin() para evitar problemas con submit en Android.
+  Diseñado para funcionar correctamente tanto en navegadores como en dispositivos Android.
+-->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+<ion-content>
+  <div class="contenido">
+    <div class="form-wrapper">
+      <!-- Formulario visual, los datos se manejan con ngModel -->
+      <form>
+        <!-- Campo Email -->
+        <div class="input-group">
+          <label for="email">Email</label>
+          <ion-item lines="inset">
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              required
+              class="styled-input"
+            />
+          </ion-item>
+        </div>
 
-    <!-- Email -->
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="emailInvalido()">
-      <p>Email no válido</p>
-    </ion-text>
+        <!-- Campo Contraseña -->
+        <div class="input-group">
+          <label for="password">Contraseña</label>
+          <ion-item lines="inset">
+            <input
+              id="password"
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              required
+              class="styled-input"
+            />
+          </ion-item>
+        </div>
 
-    <!-- Contraseña -->
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="passwordInvalida()">
-      <p>La contraseña debe tener mínimo 6 caracteres</p>
-    </ion-text>
+        <!-- Botón para iniciar sesión -->
+        <ion-button expand="block" type="button" class="login-btn" (click)="onLogin()">
+          Entrar
+        </ion-button>
+      </form>
+    </div>
 
-    <!-- Botón de login -->
-    <ion-button expand="block" type="submit" class="ion-margin-top">
-      Entrar
-    </ion-button>
-
-    <!-- Mensaje general de error -->
-    <ion-text color="danger" *ngIf="mostrarError && mensajeError">
-      <p class="ion-text-center">{{ mensajeError }}</p>
-    </ion-text>
-
-    <!-- Mensaje de éxito tras registro -->
-    <ion-text color="success" *ngIf="registroExitoso">
-      <p class="ion-text-center">✅ Cuenta registrada con éxito</p>
-    </ion-text>
-
-    <!-- Enlace para ir al registro -->
-    <ion-button expand="block" fill="clear" (click)="irARegistro()">
-      ¿No tienes cuenta? Regístrate
-    </ion-button>
-  </form>
+    <!-- Botón que redirige al registro -->
+    <div class="registro-wrapper">
+      <ion-button expand="block" fill="clear" (click)="irARegistro()" class="registro-btn">
+        ¿No tienes cuenta? Regístrate
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

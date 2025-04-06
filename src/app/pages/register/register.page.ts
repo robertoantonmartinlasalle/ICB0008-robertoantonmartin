@@ -1,52 +1,36 @@
+// Componente de registro adaptado al mismo estilo que login
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-  FormsModule,
-} from '@angular/forms';
-import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-register', // Nombre del selector del componente
   standalone: true,
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [IonicModule, FormsModule, CommonModule],
 })
 export class RegisterPage {
-  registerForm: FormGroup;
-  mostrarError = false;
-  mensajeError = '';
+  // Variables para ngModel
+  email = '';
+  password = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    // Creamos el formulario con validación
-    this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  constructor(private router: Router) {}
 
-  // Método que se ejecuta al pulsar "Registrarse"
+  // Simulamos validación y redirección tras el registro
   onRegister() {
-    if (this.registerForm.valid) {
-      // Si es válido, redirigimos al login y enviamos un estado indicando éxito
-      this.mostrarError = false;
-      this.router.navigate(['/login'], {
-        state: { registroExitoso: true }
-      });
-    } else {
-      // Mostramos mensaje de error general si hay fallos
-      this.mostrarError = true;
-      this.mensajeError = 'Por favor, completa todos los campos correctamente.';
-      this.registerForm.markAllAsTouched();
+    if (!this.email || !this.password || this.password.length < 6) {
+      alert('Introduce un email válido y una contraseña de al menos 6 caracteres.');
+      return;
     }
+
+    alert('¡Registro exitoso! Ya puedes iniciar sesión.');
+    this.router.navigate(['/login']);
   }
 
-  // Método para navegar al login desde el botón "¿Ya tienes cuenta?"
+  // Navegación al login
   irALogin() {
     this.router.navigate(['/login']);
   }
