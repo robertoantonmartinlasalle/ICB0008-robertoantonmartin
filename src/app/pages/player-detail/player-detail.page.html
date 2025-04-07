@@ -1,6 +1,6 @@
 <!--
-  Componente: Detalle de Jugador
-  Muestra los datos individuales de un jugador usando el ID recibido por queryParams.
+  Componente: player-detail.page.html
+  Vista del detalle de un jugador. Muestra todos los campos disponibles desde la API externa.
 -->
 
 <ion-header>
@@ -11,19 +11,47 @@
 
 <ion-content>
   <div class="contenido">
-    <!-- Spinner mientras se cargan los datos -->
+
+    <!-- Spinner de carga mientras se consultan los datos -->
     <ion-spinner name="dots" *ngIf="cargando" class="spinner"></ion-spinner>
 
-    <!-- Si ya hay datos del jugador -->
+    <!-- Si los datos ya han sido cargados correctamente -->
     <div *ngIf="!cargando && jugador">
+
+      <!-- Nombre del jugador -->
       <h2>{{ jugador.first_name }} {{ jugador.last_name }}</h2>
-      <p><strong>Equipo:</strong> {{ jugador.team.full_name }}</p>
+
+      <!-- Información principal -->
+      <p><strong>Equipo:</strong> {{ jugador.team?.full_name || '-' }}</p>
       <p><strong>Posición:</strong> {{ jugador.position || 'No especificada' }}</p>
-      <p><strong>Altura:</strong> {{ jugador.height_feet || '-' }} pies {{ jugador.height_inches || '' }} pulgadas</p>
-      <p><strong>Peso:</strong> {{ jugador.weight_pounds || '-' }} lbs</p>
+
+      <!-- ✅ Altura (string como "6-2", puede ser null o cadena vacía) -->
+      <p><strong>Altura:</strong>
+        {{ jugador.height && jugador.height !== '' ? jugador.height : '-' }}
+      </p>
+
+      <!-- ✅ Peso (string como "185", puede ser null o cadena vacía) -->
+      <p><strong>Peso:</strong>
+        {{ jugador.weight && jugador.weight !== '' ? jugador.weight + ' lbs' : '-' }}
+      </p>
+
+      <!-- Información adicional del jugador -->
+      <p><strong>Dorsal:</strong> {{ jugador.jersey_number || '-' }}</p>
+      <p><strong>Universidad:</strong> {{ jugador.college || '-' }}</p>
+      <p><strong>País:</strong> {{ jugador.country || '-' }}</p>
+      <p><strong>Año Draft:</strong> {{ jugador.draft_year || '-' }}</p>
+      <p><strong>Ronda Draft:</strong> {{ jugador.draft_round || '-' }}</p>
+      <p><strong>Posición Draft:</strong> {{ jugador.draft_number || '-' }}</p>
+
+      <!-- Información adicional del equipo -->
+      <div *ngIf="jugador.team">
+        <p><strong>Ciudad del equipo:</strong> {{ jugador.team.city || '-' }}</p>
+        <p><strong>División:</strong> {{ jugador.team.division || '-' }}</p>
+        <p><strong>Conferencia:</strong> {{ jugador.team.conference || '-' }}</p>
+      </div>
     </div>
 
-    <!-- Si no se encontraron datos -->
+    <!-- Si no se encuentra el jugador -->
     <div *ngIf="!cargando && !jugador">
       <p>No se encontró el jugador.</p>
     </div>

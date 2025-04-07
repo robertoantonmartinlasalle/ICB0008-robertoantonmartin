@@ -14,7 +14,7 @@ import { RouterModule, Router } from '@angular/router';
 export class PlayerListPage implements OnInit {
   jugadores: any[] = [];
   cargando = false;
-  siguienteCursor: string = ''; // Cursor actual para la paginación
+  siguienteCursor: string = '';
   hayMas = true;
 
   constructor(
@@ -23,7 +23,7 @@ export class PlayerListPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.cargarJugadores(); // Cargamos la primera tanda
+    this.cargarJugadores();
   }
 
   cargarJugadores() {
@@ -33,8 +33,6 @@ export class PlayerListPage implements OnInit {
       next: (respuesta) => {
         this.jugadores = [...this.jugadores, ...respuesta.data];
         this.siguienteCursor = respuesta.meta?.next_cursor || '';
-
-        // Si no hay cursor para la siguiente, desactivamos el botón
         this.hayMas = !!this.siguienteCursor;
         this.cargando = false;
       },
@@ -45,9 +43,8 @@ export class PlayerListPage implements OnInit {
     });
   }
 
+  // ✅ Ahora navegamos con parámetro en la URL
   verDetalleJugador(id: number) {
-    this.router.navigate(['/player-detail'], {
-      queryParams: { id }
-    });
+    this.router.navigate([`/player-detail/${id}`]);
   }
 }

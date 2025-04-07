@@ -1,4 +1,4 @@
-// Componente que muestra el detalle de un jugador seleccionado desde la lista
+// Componente que muestra el detalle de un jugador usando su ID en la URL
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -13,34 +13,31 @@ import { PlayerService } from 'src/app/services/player.service';
   imports: [IonicModule, CommonModule],
 })
 export class PlayerDetailPage implements OnInit {
-  jugador: any = null;      // Objeto que almacena los datos del jugador
-  cargando = true;          // Bandera de carga
+  jugador: any = null;     // Almacena el jugador obtenido
+  cargando = true;         // Indicador de carga
 
   constructor(
-    private route: ActivatedRoute,         // Usamos para obtener el parámetro ID desde la URL
-    private playerService: PlayerService   // Servicio que accede a la API externa
+    private route: ActivatedRoute,
+    private playerService: PlayerService
   ) {}
 
   ngOnInit() {
-    // Obtenemos el ID del jugador desde los parámetros de la ruta
-    this.route.queryParams.subscribe((params) => {
-      const id = +params['id']; // Convertimos el parámetro a número
+    // ✅ Obtenemos el ID desde la URL /player-detail/:id
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-      // Si hay ID, cargamos el jugador
-      if (id) {
-        this.cargarJugador(id);
-      } else {
-        this.cargando = false;
-        console.error('ID de jugador no proporcionado.');
-      }
-    });
+    if (id) {
+      this.cargarJugador(id);
+    } else {
+      this.cargando = false;
+      console.error('ID de jugador no proporcionado.');
+    }
   }
 
-  // Llama al servicio para obtener los detalles del jugador
   cargarJugador(id: number) {
     this.playerService.getPlayerById(id).subscribe({
-      next: (data) => {
-        this.jugador = data;
+      next: (respuesta) => {
+        // ✅ Asignamos directamente el objeto jugador desde "data"
+        this.jugador = respuesta.data;
         this.cargando = false;
       },
       error: (error) => {
