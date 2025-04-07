@@ -1,9 +1,3 @@
-<!--
-  Página: Lista de Jugadores
-  Muestra jugadores obtenidos desde la API pública.
-  Permite cargar más resultados paginados y ver detalles al hacer clic.
--->
-
 <ion-header>
   <ion-toolbar>
     <ion-title>Lista de Jugadores</ion-title>
@@ -13,31 +7,51 @@
 <ion-content>
   <div class="contenido">
 
-    <!-- Spinner principal mientras se carga la primera tanda de datos -->
+    <!-- Spinner mientras se cargan los jugadores -->
     <ion-spinner 
       name="crescent" 
       *ngIf="cargando && jugadores.length === 0" 
       class="spinner">
     </ion-spinner>
 
-    <!-- Lista de jugadores cargados -->
+    <!-- Lista de jugadores -->
     <ion-list *ngIf="jugadores.length > 0">
       <ion-item 
         *ngFor="let jugador of jugadores" 
         button 
         (click)="verDetalleJugador(jugador.id)">
-        {{ jugador.first_name }} {{ jugador.last_name }}
+        
+        <!-- ✅ Mostramos nombre, apellidos, altura, peso y equipo -->
+        <div class="info-jugador">
+          <p><strong>{{ jugador.first_name }} {{ jugador.last_name }}</strong></p>
+
+          <!-- ✅ Altura (string como "6-2") -->
+          <p>
+            Altura: 
+            {{ jugador.height && jugador.height !== '' ? jugador.height : '-' }}
+          </p>
+
+          <!-- ✅ Peso (string como "185") -->
+          <p>
+            Peso: 
+            {{ jugador.weight && jugador.weight !== '' ? jugador.weight + ' lbs' : '-' }}
+          </p>
+
+          <p>
+            Equipo: {{ jugador.team?.full_name || '-' }}
+          </p>
+        </div>
       </ion-item>
     </ion-list>
 
-    <!-- Botón para cargar más resultados -->
+    <!-- Botón cargar más -->
     <div class="boton-cargar-mas" *ngIf="hayMas && !cargando">
       <ion-button expand="block" (click)="cargarJugadores()">
         Cargar más
       </ion-button>
     </div>
 
-    <!-- Spinner secundario mientras se cargan más datos (ya hay lista) -->
+    <!-- Spinner inferior -->
     <ion-spinner 
       name="dots" 
       *ngIf="cargando && jugadores.length > 0" 

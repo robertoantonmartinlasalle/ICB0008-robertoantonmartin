@@ -87,3 +87,24 @@ ion-button {
   font-weight: bold;
   text-transform: uppercase;
 }
+
+// Contenido visual por jugador en lista
+.info-jugador {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  width: 100%;
+  color: #c2f5e9;
+
+  p {
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  strong {
+    color: #00ff99;
+    text-shadow: 0 0 4px #00ff99;
+    font-size: 16px;
+  }
+}
