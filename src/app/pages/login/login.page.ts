@@ -1,35 +1,50 @@
-// Importamos los módulos necesarios desde Angular, Ionic y Angular Router
+// Componente: login.page.ts
+// Login real con Firebase, adaptado para funcionar correctamente en Android y navegador
+
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+
+// 🔐 Firebase Auth para login
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { app } from 'src/environments/firebase.config'; // ✅ app inicializada
 
 @Component({
-  selector: 'app-login', // Selector para usar este componente
-  standalone: true, // Declaramos que es standalone para Angular moderno
+  selector: 'app-login',
+  standalone: true,
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  imports: [IonicModule, FormsModule, CommonModule], // Importamos los módulos necesarios
+  imports: [IonicModule, FormsModule, CommonModule],
 })
 export class LoginPage {
-  // Variables para enlazar con ngModel
   email = '';
   password = '';
+  private auth = getAuth(app); // ✅ Instancia única de Firebase Auth
 
   constructor(private router: Router) {}
 
-  // Método para verificar si las credenciales son correctas
-  // Por ahora es solo una simulación fija, más adelante se conectará con Firebase
+  // ✅ Método para loguear usuarios con email/contraseña
   onLogin() {
-    if (this.email === 'roberto@gmail.com' && this.password === '123456') {
-      this.router.navigate(['/player-list']); // Navegamos a la pantalla de jugadores si es válido
-    } else {
-      alert('Email o contraseña incorrectos.'); // Mostramos un aviso si falla
+    if (!this.email || !this.password) {
+      alert('Debes introducir email y contraseña.');
+      return;
     }
+
+    // Intentamos login con Firebase Auth
+    signInWithEmailAndPassword(this.auth, this.email, this.password)
+      .then(() => {
+        alert('¡Bienvenido!');
+        this.router.navigate(['/player-list']);
+      })
+      .catch((error) => {
+        console.error('Error en el login:', error);
+        alert('Credenciales incorrectas o usuario no registrado.');
+      });
   }
 
-  // Navegación hacia la pantalla de registro
+  // Redirige al registro
   irARegistro() {
     this.router.navigate(['/register']);
   }
