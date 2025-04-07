@@ -1,34 +1,75 @@
-// Fondo general
+// Fondo oscuro tipo terminal
 ion-content {
-    --background: #0d0d0d;
-    font-family: 'Courier New', monospace;
-    color: #00ff99;
-    padding: 16px;
-  }
-  
-  // Cabecera del detalle
-  ion-header {
-    --background: #121212;
-    --color: #00ff99;
-    border-bottom: 1px solid #00ff99;
-  }
-  
-  // Título y textos
-  h2 {
-    color: #00ff99;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-  
-  p {
-    font-size: 15px;
-    margin: 6px 0;
-    color: #c2f5e9;
-  }
-  
-  // Spinner centrado
-  .spinner {
-    display: block;
-    margin: 40px auto;
-  }
-  
+  --background: #0d0d0d;
+  color: #00ff99;
+  font-family: 'Courier New', monospace;
+
+  // ⚠️ Asegura que el contenido no se esconda detrás del teclado o notch
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+  padding-top: env(safe-area-inset-top, 16px);
+
+  // Flex para centrar
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+// Cabecera estilo consola
+ion-header {
+  --background: #0d0d0d;
+  --color: #00ff99;
+  border-bottom: 1px solid #00ff99;
+  box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1);
+}
+
+ion-toolbar {
+  --background: #0d0d0d !important;
+  color: #00ff99;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+ion-title {
+  color: #00ff99;
+  text-shadow: 0 0 4px #00ff99;
+  text-transform: uppercase;
+  padding-left: 8px;
+}
+
+// Contenedor centrado y adaptable
+.contenido {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+// Título del jugador centrado
+h2 {
+  color: #00ff99;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-shadow: 0 0 3px #00ff99;
+  text-align: center;
+  font-size: 24px;
+}
+
+// Texto general
+p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #c2f5e9;
+  text-align: left;
+  line-height: 1.5;
+}
+
+// Spinner
+.spinner {
+  display: block;
+  margin: 40px auto;
+}
