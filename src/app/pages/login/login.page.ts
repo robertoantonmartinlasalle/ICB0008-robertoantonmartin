@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-// 🔐 Firebase Auth para login
+// Firebase Auth para login
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { app } from 'src/environments/firebase.config'; // ✅ app inicializada
 
@@ -21,18 +21,18 @@ import { app } from 'src/environments/firebase.config'; // ✅ app inicializada
 export class LoginPage {
   email = '';
   password = '';
-  private auth = getAuth(app); // ✅ Instancia única de Firebase Auth
+  private auth = getAuth(app); // Instancia única de Firebase Auth
 
   constructor(private router: Router) {}
 
-  // ✅ Método para loguear usuarios con email/contraseña
+  // Método para loguear usuarios con email/contraseña
   onLogin() {
     if (!this.email || !this.password) {
       alert('Debes introducir email y contraseña.');
       return;
     }
 
-    // Intentamos login con Firebase Auth
+    // Login con Firebase Auth
     signInWithEmailAndPassword(this.auth, this.email, this.password)
       .then(() => {
         alert('¡Bienvenido!');
@@ -44,7 +44,7 @@ export class LoginPage {
       });
   }
 
-  // Redirige al registro
+  // Posteriormente nos redirige al registro
   irARegistro() {
     this.router.navigate(['/register']);
   }

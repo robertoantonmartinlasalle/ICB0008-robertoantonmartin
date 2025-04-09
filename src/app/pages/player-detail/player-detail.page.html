@@ -1,10 +1,15 @@
-<!-- Detalle del jugador con icono favorito usando texto visible en Android -->
+<!--
+  Vista del detalle de jugador.
+  En esta pantalla se muestran todos los datos del jugador seleccionado
+  y se permite marcarlo o desmarcarlo como favorito.
+  La estrella se muestra como texto para asegurar compatibilidad total entre plataformas.
+-->
 
 <ion-header>
   <ion-toolbar>
     <ion-title>Detalle del Jugador</ion-title>
 
-    <!-- ⭐ Favorito (texto en vez de ion-icon) -->
+    <!-- Botón para marcar o desmarcar como favorito.-->
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="toggleFavorito()" class="boton-favorito">
         <span class="estrella-favorito">
@@ -18,10 +23,15 @@
 <ion-content>
   <div class="contenido">
 
+    <!-- Spinner de carga mientras se obtienen los datos del jugador -->
     <ion-spinner name="dots" *ngIf="cargando" class="spinner"></ion-spinner>
 
+    <!-- Si el jugador se ha cargado correctamente, se muestran sus datos -->
     <div *ngIf="!cargando && jugador">
       <h2>{{ jugador.first_name }} {{ jugador.last_name }}</h2>
+
+      <!-- Información principal del jugador.
+           Si alguno de los datos no está disponible, se muestra un guion como fallback. -->
       <p><strong>Equipo:</strong> {{ jugador.team?.full_name || '-' }}</p>
       <p><strong>Posición:</strong> {{ jugador.position || '-' }}</p>
       <p><strong>Altura:</strong> {{ jugador.height || '-' }}</p>
@@ -33,6 +43,7 @@
       <p><strong>Ronda Draft:</strong> {{ jugador.draft_round || '-' }}</p>
       <p><strong>Posición Draft:</strong> {{ jugador.draft_number || '-' }}</p>
 
+      <!-- Si el objeto 'team' existe, se mostrará también detalles adicionales del equipo -->
       <div *ngIf="jugador.team">
         <p><strong>Ciudad del equipo:</strong> {{ jugador.team.city || '-' }}</p>
         <p><strong>División:</strong> {{ jugador.team.division || '-' }}</p>
@@ -40,6 +51,7 @@
       </div>
     </div>
 
+    <!-- En caso de que no se encuentre el jugador (por ID incorrecto o fallo de API) -->
     <div *ngIf="!cargando && !jugador">
       <p>No se encontró el jugador.</p>
     </div>

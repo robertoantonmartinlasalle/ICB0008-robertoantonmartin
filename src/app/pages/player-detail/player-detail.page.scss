@@ -1,17 +1,17 @@
-// 🎨 Estilo oscuro tipo terminal para toda la pantalla
+// Estilo oscuro tipo terminal para toda la pantalla
 ion-content {
   --background: #0d0d0d;
   color: #00ff99;
   font-family: 'Courier New', monospace;
 
-  // ✅ Scroll vertical completo incluso en horizontal
+  // Scroll vertical completo incluso en horizontal
   height: 100%;
   overflow-y: auto;
   padding: 16px env(safe-area-inset-left, 16px) env(safe-area-inset-bottom, 32px) env(safe-area-inset-right, 16px);
   box-sizing: border-box;
 }
 
-// 🧱 Cabecera estilo hacker
+// Cabecera estilo hacker
 ion-header {
   --background: #0d0d0d;
   --color: #00ff99;
@@ -32,7 +32,7 @@ ion-title {
   padding-left: 8px;
 }
 
-// ⭐ Estilo para la estrella de favorito en Android y Web
+// Estilo para la estrella de favorito en Android y Web
 .estrella-favorito {
   font-size: 28px;
   color: #ffff00;
@@ -42,16 +42,16 @@ ion-title {
   padding-right: 4px;
 }
 
-// 📦 Contenedor principal del contenido (sin scroll)
+// Contenedor principal del contenido (sin scroll)
 .contenido {
   max-width: 600px;
   margin: 0 auto;
   box-sizing: border-box;
 
-  // ❌ Ya no forzamos flex ni altura, dejamos que crezca libremente
+  // Ya no forzamos flex ni altura, dejamos que crezca libremente
 }
 
-// 🏷️ Título principal
+// Título principal
 h2 {
   color: #00ff99;
   margin-bottom: 20px;
@@ -61,7 +61,7 @@ h2 {
   font-size: 24px;
 }
 
-// 📝 Texto general
+// Texto general
 p {
   font-size: 15px;
   margin: 8px 0;
@@ -70,7 +70,7 @@ p {
   line-height: 1.5;
 }
 
-// ⏳ Spinner centrado
+// Spinner centrado
 .spinner {
   display: block;
   margin: 40px auto;
