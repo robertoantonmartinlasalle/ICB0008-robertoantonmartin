@@ -8,10 +8,20 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// 🟢 Importamos Keyboard desde Capacitor
+// ✅ Importamos Keyboard desde Capacitor
 import { Keyboard } from '@capacitor/keyboard';
 
-// 🟢 Lanzamos la app con providers
+// ✅ Importamos y registramos los iconos manualmente
+import { addIcons } from 'ionicons';
+import { star, starOutline } from 'ionicons/icons';
+
+// ✅ Registramos los iconos que vamos a usar en la app
+addIcons({
+  'star': star,
+  'star-outline': starOutline,
+});
+
+// ✅ Lanzamos la app con todos los providers necesarios
 bootstrapApplication(AppComponent, {
   providers: [
     provideIonicAngular(),
@@ -21,6 +31,6 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(FormsModule, ReactiveFormsModule)
   ],
 }).then(() => {
-  // ✅ Configuramos el comportamiento del teclado solo en dispositivos compatibles
+  // ✅ Configuramos el comportamiento del teclado (solo aplica en móviles)
   Keyboard.setScroll({ isDisabled: false });
 });

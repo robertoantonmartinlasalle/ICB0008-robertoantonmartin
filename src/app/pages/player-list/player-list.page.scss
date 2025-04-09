@@ -1,12 +1,10 @@
-// Fondo oscuro estilo terminal para toda la pantalla
+// Fondo oscuro estilo terminal
 ion-content {
   --background: #0d0d0d;
   color: #00ff99;
   font-family: 'Courier New', monospace;
   padding: 0 8px 16px;
   box-sizing: border-box;
-
-  // ✅ Permitir scroll vertical si es necesario (clave para Android)
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -21,7 +19,6 @@ ion-header {
   box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1);
 }
 
-// Barra de herramientas
 ion-toolbar {
   --background: #0d0d0d !important;
   color: #00ff99;
@@ -32,7 +29,6 @@ ion-toolbar {
   text-align: start;
 }
 
-// Título con brillo verde
 ion-title {
   color: #00ff99;
   text-shadow: 0 0 4px #00ff99;
@@ -40,7 +36,7 @@ ion-title {
   padding-left: 8px;
 }
 
-// Lista visual oscura y centrada
+// Lista oscura con bordes verdes
 ion-list {
   margin: 16px auto;
   border: 1px solid #00ff99;
@@ -49,13 +45,10 @@ ion-list {
   width: 100%;
   max-width: 600px;
   box-sizing: border-box;
-
-  // ✅ Aseguramos que pueda crecer y ocupar espacio
   flex-grow: 1;
   overflow-y: auto;
 }
 
-// Ítems individuales
 ion-item {
   --background: #1a1a1a;
   color: #00ff99;
@@ -88,7 +81,7 @@ ion-button {
   text-transform: uppercase;
 }
 
-// Contenido visual por jugador en lista
+// Estilo visual del contenido del jugador
 .info-jugador {
   display: flex;
   flex-direction: column;
@@ -106,5 +99,15 @@ ion-button {
     color: #00ff99;
     text-shadow: 0 0 4px #00ff99;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+
+    // ⭐ Estilo de la estrella como texto
+    .estrella-favorito {
+      font-size: 18px;
+      color: #ffff00;
+      text-shadow: 0 0 3px #ffff00;
+      margin-left: 6px;
+    }
   }
 }

@@ -1,36 +1,28 @@
-// Fondo oscuro tipo terminal
+// 🎨 Estilo oscuro tipo terminal para toda la pantalla
 ion-content {
   --background: #0d0d0d;
   color: #00ff99;
   font-family: 'Courier New', monospace;
 
-  // ⚠️ Asegura que el contenido no se esconda detrás del teclado o notch
-  padding-bottom: env(safe-area-inset-bottom, 16px);
-  padding-top: env(safe-area-inset-top, 16px);
-
-  // Flex para centrar
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100%;
+  // ✅ Scroll vertical completo incluso en horizontal
+  height: 100%;
+  overflow-y: auto;
+  padding: 16px env(safe-area-inset-left, 16px) env(safe-area-inset-bottom, 32px) env(safe-area-inset-right, 16px);
   box-sizing: border-box;
 }
 
-// Cabecera estilo consola
+// 🧱 Cabecera estilo hacker
 ion-header {
   --background: #0d0d0d;
   --color: #00ff99;
   border-bottom: 1px solid #00ff99;
-  box-shadow: 0 2px 8px rgba(0, 255, 153, 0.1);
 }
 
 ion-toolbar {
   --background: #0d0d0d !important;
-  color: #00ff99;
   font-family: 'Courier New', monospace;
   font-weight: bold;
   font-size: 20px;
-  letter-spacing: 0.5px;
 }
 
 ion-title {
@@ -40,16 +32,26 @@ ion-title {
   padding-left: 8px;
 }
 
-// Contenedor centrado y adaptable
-.contenido {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 16px;
-  box-sizing: border-box;
+// ⭐ Estilo para la estrella de favorito en Android y Web
+.estrella-favorito {
+  font-size: 28px;
+  color: #ffff00;
+  text-shadow: 0 0 4px #ffff00;
+  line-height: 1;
+  display: block;
+  padding-right: 4px;
 }
 
-// Título del jugador centrado
+// 📦 Contenedor principal del contenido (sin scroll)
+.contenido {
+  max-width: 600px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  // ❌ Ya no forzamos flex ni altura, dejamos que crezca libremente
+}
+
+// 🏷️ Título principal
 h2 {
   color: #00ff99;
   margin-bottom: 20px;
@@ -59,7 +61,7 @@ h2 {
   font-size: 24px;
 }
 
-// Texto general
+// 📝 Texto general
 p {
   font-size: 15px;
   margin: 8px 0;
@@ -68,7 +70,7 @@ p {
   line-height: 1.5;
 }
 
-// Spinner
+// ⏳ Spinner centrado
 .spinner {
   display: block;
   margin: 40px auto;

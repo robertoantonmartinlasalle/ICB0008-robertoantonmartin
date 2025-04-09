@@ -1,3 +1,10 @@
+<!--
+  Componente: player-list.page.html
+  Lista de jugadores con paginación.
+  Muestra una estrella solo si el jugador es favorito.
+  Compatible con Android y navegador web.
+-->
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Lista de Jugadores</ion-title>
@@ -7,51 +14,64 @@
 <ion-content>
   <div class="contenido">
 
-    <!-- Spinner mientras se cargan los jugadores -->
+    <!-- ⏳ Spinner mientras se cargan los primeros jugadores -->
     <ion-spinner 
       name="crescent" 
       *ngIf="cargando && jugadores.length === 0" 
       class="spinner">
     </ion-spinner>
 
-    <!-- Lista de jugadores -->
+    <!-- 📄 Lista de jugadores obtenidos de la API -->
     <ion-list *ngIf="jugadores.length > 0">
       <ion-item 
         *ngFor="let jugador of jugadores" 
         button 
         (click)="verDetalleJugador(jugador.id)">
-        
-        <!-- ✅ Mostramos nombre, apellidos, altura, peso y equipo -->
-        <div class="info-jugador">
-          <p><strong>{{ jugador.first_name }} {{ jugador.last_name }}</strong></p>
 
-          <!-- ✅ Altura (string como "6-2") -->
+        <!-- 📦 Contenedor visual del jugador -->
+        <div class="info-jugador">
+
+          <!-- 🔠 Nombre del jugador + estrella (si es favorito) -->
+          <p>
+            <strong>
+              {{ jugador.first_name }} {{ jugador.last_name }}
+
+              <!-- ⭐ Mostramos solo si es favorito -->
+              <span *ngIf="jugador.esFavorito" class="estrella-favorito">
+                ★
+              </span>
+            </strong>
+          </p>
+
+          <!-- 📏 Altura -->
           <p>
             Altura: 
             {{ jugador.height && jugador.height !== '' ? jugador.height : '-' }}
           </p>
 
-          <!-- ✅ Peso (string como "185") -->
+          <!-- ⚖️ Peso -->
           <p>
             Peso: 
             {{ jugador.weight && jugador.weight !== '' ? jugador.weight + ' lbs' : '-' }}
           </p>
 
+          <!-- 🏀 Equipo -->
           <p>
             Equipo: {{ jugador.team?.full_name || '-' }}
           </p>
         </div>
+
       </ion-item>
     </ion-list>
 
-    <!-- Botón cargar más -->
+    <!-- ➕ Botón de paginación -->
     <div class="boton-cargar-mas" *ngIf="hayMas && !cargando">
       <ion-button expand="block" (click)="cargarJugadores()">
         Cargar más
       </ion-button>
     </div>
 
-    <!-- Spinner inferior -->
+    <!-- 🔄 Spinner al cargar más jugadores -->
     <ion-spinner 
       name="dots" 
       *ngIf="cargando && jugadores.length > 0" 
