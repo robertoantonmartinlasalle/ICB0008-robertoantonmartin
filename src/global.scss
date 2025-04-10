@@ -1,45 +1,46 @@
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
+ * Aquí defino los estilos globales que se aplican a toda la aplicación.
+ * Este archivo no está asociado a ningún componente en particular.
+ * También lo uso como punto de entrada para importar otros estilos de Ionic.
+ * Más información en la documentación oficial:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-/* Core CSS required for Ionic components to work properly */
+/* Estilos esenciales para que los componentes de Ionic funcionen correctamente */
 @import "@ionic/angular/css/core.css";
 
-/* Basic CSS for apps built with Ionic */
+/* Estilos básicos comunes a todas las apps hechas con Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Utilidades opcionales que decidí incluir por si necesitaba más control visual */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
+/*
+ * Modo oscuro automático
  * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
+ * Importé el sistema dark mode para que se adapte al sistema operativo del usuario.
+ * Decidí no usar el modo oscuro siempre activo ni el que depende de clases manuales.
  */
-
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/*
+ * Establezco un fondo negro total para toda la app desde el principio.
+ * Esto refuerza el estilo visual oscuro que quise seguir durante el proyecto.
+ * También elimino márgenes y paddings para evitar errores de visualización.
+ */
 html, body {
-    background-color: #0d0d0d !important; // Fondo negro total
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  
+  background-color: #0d0d0d !important;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

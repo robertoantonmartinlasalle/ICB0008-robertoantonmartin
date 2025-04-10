@@ -1,4 +1,5 @@
 // Servicio: native.service.ts
+
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
@@ -8,15 +9,19 @@ export class NativeService {
 
   constructor() {}
 
-  // ✅ Esta versión cumple exactamente lo que pediste
+  /*
+    Abre la cámara o galería dependiendo del entorno (web o móvil).
+    Uso base64 (dataUrl) porque funciona bien tanto en navegador como en Android.
+    Reduzco la calidad para evitar errores o cierres inesperados.
+  */
   async abrirCamara(): Promise<string | null> {
     try {
       const isWeb = !/(Android|iPhone|iPad|iPod)/i.test(navigator.userAgent);
 
       const photo = await Camera.getPhoto({
-        resultType: CameraResultType.DataUrl, // base64 para mostrar directamente
-        source: isWeb ? CameraSource.Photos : CameraSource.Prompt, // 🎯 Web solo galería, móvil galería o cámara
-        quality: 50 // calidad media para evitar errores en Android
+        resultType: CameraResultType.DataUrl,
+        source: isWeb ? CameraSource.Photos : CameraSource.Prompt,
+        quality: 50
       });
 
       return photo.dataUrl ?? null;
@@ -32,11 +37,15 @@ export class NativeService {
     }
   }
 
+  /*
+    Método para compartir el nombre completo del jugador usando
+    la API nativa o web de compartir del dispositivo.
+  */
   async compartirJugador(nombreCompleto: string) {
     try {
       await Share.share({
         title: 'Jugador de la NBA',
-        text: `¡Mira este jugador! ${nombreCompleto}`,
+        text: `¡Mira este jugador!¡Es un Crack! ${nombreCompleto}`,
         dialogTitle: 'Compartir jugador'
       });
     } catch (error) {

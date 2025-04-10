@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 // Firebase Auth para login
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { app } from 'src/environments/firebase.config'; // ✅ app inicializada
+import { app } from 'src/environments/firebase.config'; // app inicializada
 
 @Component({
   selector: 'app-login',
@@ -21,18 +21,27 @@ import { app } from 'src/environments/firebase.config'; // ✅ app inicializada
 export class LoginPage {
   email = '';
   password = '';
-  private auth = getAuth(app); // Instancia única de Firebase Auth
+
+  /* 
+   Inicializo la instancia de autenticación de Firebase.
+   Esta instancia se usará para realizar el login con email y contraseña.
+  */
+  private auth = getAuth(app);
 
   constructor(private router: Router) {}
 
-  // Método para loguear usuarios con email/contraseña
+  /*
+   Método que se ejecuta al hacer login.
+   Comprueba que los campos estén completos y luego hace login con Firebase.
+   Si es correcto, redirige a la lista de jugadores.
+  */
   onLogin() {
     if (!this.email || !this.password) {
       alert('Debes introducir email y contraseña.');
       return;
     }
 
-    // Login con Firebase Auth
+    // Intento iniciar sesión con Firebase Auth
     signInWithEmailAndPassword(this.auth, this.email, this.password)
       .then(() => {
         alert('¡Bienvenido!');
@@ -44,7 +53,9 @@ export class LoginPage {
       });
   }
 
-  // Posteriormente nos redirige al registro
+  /*
+   Método que me lleva a la pantalla de registro si el usuario no tiene cuenta.
+  */
   irARegistro() {
     this.router.navigate(['/register']);
   }

@@ -7,13 +7,17 @@ import { Keyboard } from '@capacitor/keyboard';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonApp, IonRouterOutlet], // ⬅️ Aquí está la clave para que reconozca los elementos
+  imports: [IonApp, IonRouterOutlet], 
 })
 export class AppComponent {
   constructor() {
-    this.configurarTeclado(); // Inicializamos comportamiento del teclado
+    this.configurarTeclado(); // Inicializo comportamiento del teclado al arrancar la app
   }
 
+  /*
+    Configuro el comportamiento del teclado en Android para evitar errores de scroll
+    cuando se abren formularios o inputs.
+  */
   configurarTeclado() {
     if (Capacitor.getPlatform() === 'android') {
       Keyboard.setScroll({ isDisabled: false });

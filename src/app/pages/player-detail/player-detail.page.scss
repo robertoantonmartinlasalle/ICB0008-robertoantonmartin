@@ -4,7 +4,7 @@ ion-content {
   color: #00ff99;
   font-family: 'Courier New', monospace;
 
-  // Scroll vertical completo incluso en orientación horizontal
+  // Scroll vertical completo incluso en orientación horizontal. Tuve problemas con el landscape en android
   height: 100%;
   overflow-y: auto;
   padding: 16px env(safe-area-inset-left, 16px) env(safe-area-inset-bottom, 32px) env(safe-area-inset-right, 16px);
@@ -81,7 +81,7 @@ p {
   margin-bottom: 16px;
 
   img {
-    width: 100%;               // Se adapta al ancho del contenedor
+    width: 100%;               
     max-width: 300px;          // Máximo 300px para evitar problemas en Android
     border: 2px solid #00ff99;
     border-radius: 8px;

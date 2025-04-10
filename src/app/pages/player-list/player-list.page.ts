@@ -1,9 +1,6 @@
 // Componente: player-list.page.ts
 // Este componente muestra una lista paginada de jugadores obtenidos desde la API externa.
-// También consulta Firebase para saber qué jugadores son favoritos del usuario actual.
-// He incorporado funcionalidades de cámara y compartir, y optimizado la gestión de imágenes
-// para evitar fallos al usar dispositivos Android. Además, los botones se sitúan junto al
-// nombre de cada jugador porque me parece más lógico visual y funcionalmente.
+// También consulta Firebase para saber qué jugadores son favoritos del usuario actual.S
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,11 +20,11 @@ import { NativeService } from 'src/app/services/native.service';
 })
 export class PlayerListPage implements OnInit {
 
-  jugadores: any[] = [];             // Lista de jugadores obtenidos desde la API externa
-  cargando = false;                  // Spinner de carga
-  siguienteCursor: string = '';     // Cursor para la paginación de la API externa
-  hayMas = true;                    // Si hay más resultados disponibles
-  favoritos: number[] = [];         // IDs de jugadores marcados como favoritos
+  jugadores: any[] = [];
+  cargando = false;
+  siguienteCursor: string = '';
+  hayMas = true;
+  favoritos: number[] = [];
 
   constructor(
     private playerService: PlayerService,
@@ -36,7 +33,10 @@ export class PlayerListPage implements OnInit {
     private nativeService: NativeService
   ) {}
 
-  // 🚀 Al iniciar el componente, primero cargamos los favoritos y luego los jugadores
+  /*
+   Al iniciar el componente cargo primero los favoritos y luego los jugadores.
+   Si algo falla, detengo la carga y muestro el error por consola.
+  */
   async ngOnInit() {
     this.cargando = true;
     try {
@@ -48,7 +48,10 @@ export class PlayerListPage implements OnInit {
     }
   }
 
-  // 🔄 Cada vez que se entra en la vista (al volver del detalle), actualizamos los favoritos
+  /*
+   Cada vez que entro en la vista, actualizo la lista de favoritos
+   para que esté sincronizada con Firestore.
+  */
   async ionViewWillEnter() {
     this.cargando = true;
     await this.cargarFavoritos();
@@ -56,18 +59,24 @@ export class PlayerListPage implements OnInit {
     this.cargando = false;
   }
 
-  // 🔁 Llama a Firestore y obtiene la lista de jugadores favoritos del usuario actual
+  /*
+   Llamo a Firestore para obtener la lista de jugadores favoritos
+   y guardo solo los IDs para comprobarlos después.
+  */
   async cargarFavoritos() {
     try {
       const favoritos = await this.favoriteService.getFavorites();
-      this.favoritos = favoritos.map(fav => fav.id); // Solo almacenamos los IDs
+      this.favoritos = favoritos.map(fav => fav.id);
     } catch (error) {
       console.error('Error al cargar favoritos:', error);
       this.favoritos = [];
     }
   }
 
-  // 📡 Carga los jugadores desde la API externa con paginación
+  /*
+   Llamo al servicio de la API externa para obtener los jugadores.
+   Con la respuesta, marco si cada jugador es favorito y hago paginación.
+  */
   cargarJugadores() {
     this.playerService.getPlayers(this.siguienteCursor).subscribe({
       next: (respuesta) => {
@@ -88,7 +97,10 @@ export class PlayerListPage implements OnInit {
     });
   }
 
-  // 🔄 Actualiza la propiedad esFavorito de los jugadores ya cargados en memoria
+  /*
+   Después de cargar jugadores, actualizo su estado de favorito
+   en función de los IDs que tengo almacenados.
+  */
   actualizarFavoritosEnLista() {
     this.jugadores = this.jugadores.map(jugador => ({
       ...jugador,
@@ -96,26 +108,28 @@ export class PlayerListPage implements OnInit {
     }));
   }
 
-  // ✅ Método auxiliar para saber si un jugador es favorito (no usado en plantilla)
+  // Método auxiliar por si necesito comprobar favoritos manualmente
   esFavorito(id: number): boolean {
     return this.favoritos.includes(id);
   }
 
-  // 🧭 Navega al detalle del jugador seleccionado
+  // Redirige a la página de detalle del jugador seleccionado
   verDetalleJugador(id: number) {
     this.router.navigate([`/player-detail/${id}`]);
   }
 
-  // 📸 Al pulsar el botón cámara, abrimos la cámara del dispositivo y tratamos la imagen de forma segura.
-  // ✅ La imagen se guarda en localStorage (base64), ya no aplicamos límites fijos.
+  /*
+   Al pulsar el botón de cámara, abro la cámara del dispositivo con NativeService.
+   Si se toma la foto correctamente, la guardo en localStorage y redirijo al detalle.
+  */
   async abrirCamaraJugador(jugadorId: number) {
     const imagen = await this.nativeService.abrirCamara();
 
     if (imagen) {
       try {
-        localStorage.setItem('fotoJugador', imagen); // ✅ Guardamos directamente
+        localStorage.setItem('fotoJugador', imagen);
         console.log('Imagen guardada en localStorage');
-        this.verDetalleJugador(jugadorId); // ✅ Navegamos al detalle del jugador
+        this.verDetalleJugador(jugadorId);
       } catch (error) {
         console.error('❌ Error al guardar imagen:', error);
         alert('⚠️ Ha ocurrido un error al guardar la imagen.');
@@ -125,7 +139,10 @@ export class PlayerListPage implements OnInit {
     }
   }
 
-  // 📤 Al pulsar el botón compartir, se activa la API nativa para compartir el nombre del jugador
+  /*
+   Al pulsar compartir, llamo al método del servicio nativo para compartir
+   el nombre completo del jugador mediante la API correspondiente.
+  */
   async compartirJugador(nombreCompleto: string) {
     await this.nativeService.compartirJugador(nombreCompleto);
   }

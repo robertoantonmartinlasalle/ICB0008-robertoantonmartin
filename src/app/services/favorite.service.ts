@@ -1,5 +1,5 @@
 // Servicio: favorite.service.ts
-// ✅ Guarda, elimina y consulta jugadores favoritos en Firestore por usuario autenticado.
+// Guarda, elimina y consulta jugadores favoritos en Firestore por usuario autenticado.
 
 import { Injectable } from '@angular/core';
 import {
@@ -18,19 +18,23 @@ import { app } from 'src/environments/firebase.config';
 
 @Injectable({ providedIn: 'root' })
 export class FavoriteService {
-  private firestore: Firestore = getFirestore(app); // 🔥 Inicializa Firestore con la app
 
-  /**
-   * ✅ Devuelve el UID del usuario autenticado
-   */
+  // Inicializo Firestore a partir de la app de Firebase
+  private firestore: Firestore = getFirestore(app);
+
+  /*
+   Devuelvo el UID del usuario autenticado. 
+   Si no hay sesión iniciada, retorno null.
+  */
   private getUserId(): string | null {
     const user = getAuth().currentUser;
     return user ? user.uid : null;
   }
 
-  /**
-   * ✅ Añade un jugador a favoritos (guardando campos seguros)
-   */
+  /*
+   Añade un jugador a la lista de favoritos del usuario actual.
+   Solo guardo los campos necesarios y limpios.
+  */
   async addFavorite(player: any): Promise<void> {
     const userId = this.getUserId();
     if (!userId) {
@@ -43,7 +47,6 @@ export class FavoriteService {
       throw new Error('El jugador no tiene ID.');
     }
 
-    // 🎯 Creamos un objeto limpio con solo los datos importantes
     const jugadorParaGuardar = {
       id: player.id,
       first_name: player.first_name || '',
@@ -61,12 +64,13 @@ export class FavoriteService {
     };
 
     const favRef = doc(this.firestore, `users/${userId}/favorites/${player.id}`);
-    await setDoc(favRef, jugadorParaGuardar); // ✅ Guardamos datos seguros
+    await setDoc(favRef, jugadorParaGuardar);
   }
 
-  /**
-   * ✅ Elimina un jugador de favoritos por su ID
-   */
+  /*
+   Elimina el jugador de favoritos según su ID.
+   Solo funciona si el usuario está autenticado.
+  */
   async removeFavorite(playerId: number): Promise<void> {
     const userId = this.getUserId();
     if (!userId) {
@@ -78,9 +82,10 @@ export class FavoriteService {
     await deleteDoc(favRef);
   }
 
-  /**
-   * ✅ Devuelve todos los favoritos del usuario autenticado
-   */
+  /*
+   Devuelvo todos los jugadores favoritos del usuario actual.
+   Si no hay sesión, lanzo un error.
+  */
   async getFavorites(): Promise<any[]> {
     const userId = this.getUserId();
     if (!userId) {
@@ -93,9 +98,10 @@ export class FavoriteService {
     return snapshot.docs.map((doc) => doc.data());
   }
 
-  /**
-   * ✅ Verifica si un jugador está en la colección de favoritos
-   */
+  /*
+   Comprueba si un jugador está guardado como favorito por el usuario actual.
+   Si no hay sesión iniciada, devuelve false directamente.
+  */
   async isFavorite(playerId: number): Promise<boolean> {
     const userId = this.getUserId();
     if (!userId) {

@@ -22,21 +22,24 @@ import { FavoriteService } from 'src/app/services/favorite.service';
 })
 export class PlayerDetailPage implements OnInit {
 
-  jugador: any = null;                // Objeto con los datos del jugador
-  cargando = true;                    // Indicador de carga mientras se obtiene la info desde la API
-  esFavorito = false;                // Indica si el jugador está marcado como favorito
-  actualizandoFavorito = false;      // Flag para evitar múltiples clics rápidos sobre la estrella
-  fotoJugador: string | null = null; // Imagen tomada desde cámara, recibida como URI
+  jugador: any = null;
+  cargando = true;
+  esFavorito = false;
+  actualizandoFavorito = false;
+  fotoJugador: string | null = null;
 
   constructor(
-    private route: ActivatedRoute,                // Para acceder al parámetro de la ruta (id del jugador)
-    private playerService: PlayerService,         // Servicio que obtiene datos del jugador desde la API externa
-    private favoriteService: FavoriteService,     // Servicio que gestiona los favoritos en Firebase
-    private toastController: ToastController,     // Componente para mostrar mensajes tipo toast
-    private cd: ChangeDetectorRef                 // Para forzar la detección de cambios visuales
+    private route: ActivatedRoute,
+    private playerService: PlayerService,
+    private favoriteService: FavoriteService,
+    private toastController: ToastController,
+    private cd: ChangeDetectorRef
   ) {}
 
-  // 🚀 Al iniciar el componente obtenemos el ID desde la ruta y cargamos los datos
+  /*
+   Al iniciar el componente obtengo el ID de la ruta
+   y llamo al método que carga los datos del jugador.
+  */
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -48,25 +51,26 @@ export class PlayerDetailPage implements OnInit {
     }
   }
 
-  // 📡 Obtenemos los datos del jugador desde la API externa
+  /*
+   Llamo al servicio para obtener los datos del jugador desde la API externa.
+   También compruebo si está en favoritos y recupero la foto temporal si existe.
+  */
   cargarJugador(id: number) {
     this.playerService.getPlayerById(id).subscribe({
       next: async (respuesta) => {
         this.jugador = {
           ...respuesta.data,
-          id: respuesta.data.id, // Aseguramos que tenga campo id por seguridad
+          id: respuesta.data.id,
         };
 
-        // ✅ Recuperamos la URI de la imagen desde localStorage (si fue tomada previamente)
         this.fotoJugador = localStorage.getItem('fotoJugador');
-        localStorage.removeItem('fotoJugador'); // Eliminamos la URI tras usarla
+        localStorage.removeItem('fotoJugador');
 
         this.cargando = false;
 
         try {
-          // 🔁 Comprobamos si el jugador está marcado como favorito en Firestore
           this.esFavorito = await this.favoriteService.isFavorite(this.jugador.id);
-          this.cd.detectChanges(); // Actualizamos la vista si es necesario
+          this.cd.detectChanges();
         } catch (error) {
           console.error('Error al comprobar favorito:', error);
         }
@@ -78,35 +82,40 @@ export class PlayerDetailPage implements OnInit {
     });
   }
 
-  // ⭐ Al pulsar sobre la estrella cambiamos el estado de favorito
+  /*
+   Al pulsar sobre la estrella cambio el estado de favorito.
+   Si hay error, vuelvo al estado anterior y muestro un toast.
+  */
   async toggleFavorito() {
     if (!this.jugador || this.actualizandoFavorito) return;
 
     this.actualizandoFavorito = true;
     const estadoAnterior = this.esFavorito;
     this.esFavorito = !this.esFavorito;
-    this.cd.detectChanges(); // Refrescar vista inmediatamente
+    this.cd.detectChanges();
 
     try {
       if (this.esFavorito) {
-        await this.favoriteService.addFavorite(this.jugador); // Añadimos a favoritos en Firestore
+        await this.favoriteService.addFavorite(this.jugador);
         this.mostrarToast('Añadido a favoritos ✅');
       } else {
-        await this.favoriteService.removeFavorite(this.jugador.id); // Eliminamos de favoritos
+        await this.favoriteService.removeFavorite(this.jugador.id);
         this.mostrarToast('Eliminado de favoritos ❌');
       }
     } catch (error) {
-      // Si ocurre un error, volvemos al estado anterior
       console.error('Error al actualizar favorito:', error);
       this.esFavorito = estadoAnterior;
       this.mostrarToast('Error al actualizar favorito ⚠️');
-      this.cd.detectChanges(); // Volvemos a mostrar el estado anterior en la UI
+      this.cd.detectChanges();
     }
 
     this.actualizandoFavorito = false;
   }
 
-  // 🍞 Método para mostrar un mensaje tipo toast en la parte inferior de la pantalla
+  /*
+   Muestro un toast con el mensaje recibido, 
+   útil para confirmar acciones al usuario.
+  */
   async mostrarToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,

@@ -8,20 +8,20 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// ✅ Importamos Keyboard desde Capacitor
+// Importo el plugin Keyboard de Capacitor para poder configurar su comportamiento
 import { Keyboard } from '@capacitor/keyboard';
 
-// ✅ Importamos y registramos los iconos manualmente
+// Importo y registro solo los iconos que necesito (estrella rellena y vacía)
 import { addIcons } from 'ionicons';
 import { star, starOutline } from 'ionicons/icons';
 
-// ✅ Registramos los iconos que vamos a usar en la app
+// Registro los iconos personalizados que voy a usar en los componentes
 addIcons({
   'star': star,
   'star-outline': starOutline,
 });
 
-// ✅ Lanzamos la app con todos los providers necesarios
+// Inicio la aplicación cargando AppComponent y registrando todos los providers necesarios
 bootstrapApplication(AppComponent, {
   providers: [
     provideIonicAngular(),
@@ -31,6 +31,9 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(FormsModule, ReactiveFormsModule)
   ],
 }).then(() => {
-  // ✅ Configuramos el comportamiento del teclado (solo aplica en móviles)
+  /*
+    Una vez arranca la app, configuro el scroll del teclado.
+    Esto me permite evitar comportamientos erróneos al abrir inputs en móviles.
+  */
   Keyboard.setScroll({ isDisabled: false });
 });
