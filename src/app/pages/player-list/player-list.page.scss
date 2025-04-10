@@ -110,4 +110,21 @@ ion-button {
       margin-left: 6px;
     }
   }
+
+  // Estilo para los botones de cámara y compartir
+  .acciones-jugador {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 4px;
+
+    ion-button {
+      --color: #00ff99;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      padding: 0 12px;
+      height: 32px;
+    }
+  }
 }
