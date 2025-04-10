@@ -1,8 +1,11 @@
 <!--
   Componente: player-list.page.html
-  Lista de jugadores con paginación.
-  Muestra una estrella solo si el jugador es favorito.
-  Compatible con Android y navegador web.
+  Esta vista muestra la lista paginada de jugadores obtenidos de la API externa.
+  Para cada jugador se indica si es favorito mediante una estrella.
+  También he integrado dos botones: uno para abrir la cámara y otro para compartir.
+  He preferido ubicar estos botones directamente junto al nombre del jugador, ya que
+  así tiene más sentido visual y funcional que agruparlos en la cabecera.
+  Esta solución es compatible tanto en Android como en navegador web.
 -->
 
 <ion-header>
@@ -14,29 +17,29 @@
 <ion-content>
   <div class="contenido">
 
-    <!-- Spinner mientras se cargan los primeros jugadores -->
+    <!-- Spinner principal mientras se cargan los datos por primera vez -->
     <ion-spinner 
       name="crescent" 
       *ngIf="cargando && jugadores.length === 0" 
       class="spinner">
     </ion-spinner>
 
-    <!-- Lista de jugadores obtenidos de la API -->
+    <!-- Lista de jugadores, se renderiza cuando hay jugadores disponibles -->
     <ion-list *ngIf="jugadores.length > 0">
       <ion-item 
         *ngFor="let jugador of jugadores" 
         button 
         (click)="verDetalleJugador(jugador.id)">
 
-        <!-- Contenedor visual del jugador -->
+        <!-- Contenedor del contenido visual del jugador -->
         <div class="info-jugador">
 
-          <!-- Nombre del jugador + estrella (si es favorito) -->
+          <!-- Nombre del jugador -->
           <p>
             <strong>
               {{ jugador.first_name }} {{ jugador.last_name }}
 
-              <!-- Se muestra solo si es favorito -->
+              <!-- Estrella amarilla solo si es favorito -->
               <span *ngIf="jugador.esFavorito" class="estrella-favorito">
                 ★
               </span>
@@ -60,23 +63,27 @@
             Equipo: {{ jugador.team?.full_name || '-' }}
           </p>
 
-          <!-- Botones de cámara y compartir -->
+          <!-- Acciones por jugador: cámara y compartir -->
           <div class="acciones-jugador">
-            <!-- Botón de cámara (funciona en dispositivos Android) -->
+
+            <!-- 📸 Botón para abrir la cámara del dispositivo.
+                 Pasamos el ID del jugador para luego redirigir al detalle correspondiente.
+                 $event.stopPropagation evita que se dispare el click del ion-item -->
             <ion-button 
               fill="clear" 
               size="small" 
-              (click)="abrirCamaraJugador(); $event.stopPropagation()">
+              (click)="abrirCamaraJugador(jugador.id); $event.stopPropagation()">
               Cámara
             </ion-button>
 
-            <!-- Botón para compartir el nombre del jugador -->
+            <!-- 📤 Botón para compartir el nombre del jugador mediante Web Share API o nativo -->
             <ion-button 
               fill="clear" 
               size="small" 
               (click)="compartirJugador(jugador.first_name + ' ' + jugador.last_name); $event.stopPropagation()">
               Compartir
             </ion-button>
+
           </div>
 
         </div>
@@ -84,14 +91,14 @@
       </ion-item>
     </ion-list>
 
-    <!-- Paginación -->
+    <!-- Botón para cargar más jugadores (paginación) -->
     <div class="boton-cargar-mas" *ngIf="hayMas && !cargando">
       <ion-button expand="block" (click)="cargarJugadores()">
         Cargar más
       </ion-button>
     </div>
 
-    <!-- Spinner al cargar más jugadores -->
+    <!-- Spinner mientras se cargan más resultados -->
     <ion-spinner 
       name="dots" 
       *ngIf="cargando && jugadores.length > 0" 

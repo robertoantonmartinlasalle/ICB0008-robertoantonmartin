@@ -4,7 +4,7 @@ ion-content {
   color: #00ff99;
   font-family: 'Courier New', monospace;
 
-  // Scroll vertical completo incluso en horizontal
+  // Scroll vertical completo incluso en orientación horizontal
   height: 100%;
   overflow-y: auto;
   padding: 16px env(safe-area-inset-left, 16px) env(safe-area-inset-bottom, 32px) env(safe-area-inset-right, 16px);
@@ -32,7 +32,7 @@ ion-title {
   padding-left: 8px;
 }
 
-// Estilo para la estrella de favorito en Android y Web
+// Estilo visual para la estrella de favorito
 .estrella-favorito {
   font-size: 28px;
   color: #ffff00;
@@ -42,16 +42,15 @@ ion-title {
   padding-right: 4px;
 }
 
-// Contenedor principal del contenido (sin scroll)
+// Contenedor principal del contenido
 .contenido {
   max-width: 600px;
   margin: 0 auto;
   box-sizing: border-box;
-
-  // Ya no forzamos flex ni altura, dejamos que crezca libremente
+  // No usamos height ni flex para permitir scroll normal
 }
 
-// Título principal
+// Título principal del jugador
 h2 {
   color: #00ff99;
   margin-bottom: 20px;
@@ -61,7 +60,7 @@ h2 {
   font-size: 24px;
 }
 
-// Texto general
+// Texto de detalle del jugador
 p {
   font-size: 15px;
   margin: 8px 0;
@@ -70,8 +69,25 @@ p {
   line-height: 1.5;
 }
 
-// Spinner centrado
+// Spinner centrado mientras carga el jugador
 .spinner {
   display: block;
   margin: 40px auto;
+}
+
+// ✅ Imagen capturada desde cámara
+.foto-jugador {
+  text-align: center;
+  margin-bottom: 16px;
+
+  img {
+    width: 100%;               // Se adapta al ancho del contenedor
+    max-width: 300px;          // Máximo 300px para evitar problemas en Android
+    border: 2px solid #00ff99;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #00ff99;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;         // Evita deformaciones
+  }
 }

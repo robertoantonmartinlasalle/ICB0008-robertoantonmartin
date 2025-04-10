@@ -2,7 +2,16 @@
 
 // ✅ Importamos lo necesario desde Angular y Firebase
 import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential, getAuth } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
+  getAuth,
+  browserLocalPersistence,
+  setPersistence
+} from 'firebase/auth';
+
 import { app } from 'src/environments/firebase.config'; // Importamos la app de Firebase que configuramos previamente
 
 @Injectable({
@@ -13,7 +22,13 @@ export class AuthService {
   // ✅ Obtenemos la instancia del módulo de autenticación de Firebase
   private auth = getAuth(app);
 
-  constructor() {}
+  constructor() {
+    // ✅ Establecemos persistencia local para que Firebase recuerde la sesión
+    // incluso si la app se reinicia (especialmente importante en Android)
+    setPersistence(this.auth, browserLocalPersistence).catch(error => {
+      console.error('❌ Error al establecer persistencia de Firebase:', error);
+    });
+  }
 
   /**
    * 🔐 Método para registrar un usuario con email y contraseña

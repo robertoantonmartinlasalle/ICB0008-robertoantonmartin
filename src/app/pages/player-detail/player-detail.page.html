@@ -1,15 +1,17 @@
 <!--
-  Vista del detalle de jugador.
-  En esta pantalla se muestran todos los datos del jugador seleccionado
-  y se permite marcarlo o desmarcarlo como favorito.
-  La estrella se muestra como texto para asegurar compatibilidad total entre plataformas.
+  Componente: player-detail.page.html
+  En esta pantalla muestro los detalles de un jugador, incluyendo su nombre, equipo,
+  posición y otros datos. También he integrado una estrella para marcarlo como favorito.
+  Si el usuario ha tomado una fotografía desde la lista de jugadores, esta se muestra
+  aquí mediante un <img> con estilo controlado (clase "foto-jugador").
+  Esto lo hice así para evitar errores en Android con imágenes muy grandes.
 -->
 
 <ion-header>
   <ion-toolbar>
     <ion-title>Detalle del Jugador</ion-title>
 
-    <!-- Botón para marcar o desmarcar como favorito.-->
+    <!-- Estrella para marcar como favorito (texto en lugar de icono por compatibilidad) -->
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="toggleFavorito()" class="boton-favorito">
         <span class="estrella-favorito">
@@ -23,15 +25,22 @@
 <ion-content>
   <div class="contenido">
 
-    <!-- Spinner de carga mientras se obtienen los datos del jugador -->
+    <!-- Spinner mientras se cargan los datos del jugador -->
     <ion-spinner name="dots" *ngIf="cargando" class="spinner"></ion-spinner>
 
-    <!-- Si el jugador se ha cargado correctamente, se muestran sus datos -->
+    <!-- Si el jugador se ha cargado correctamente -->
     <div *ngIf="!cargando && jugador">
+
+      <!-- ✅ Mostramos la imagen del jugador si se ha tomado una con la cámara -->
+      <!-- El estilo "foto-jugador" en SCSS se encarga de limitar el tamaño y evitar errores de renderizado -->
+      <div *ngIf="fotoJugador" class="foto-jugador">
+        <img [src]="fotoJugador" alt="Foto del jugador" />
+      </div>
+
+      <!-- Nombre y apellidos -->
       <h2>{{ jugador.first_name }} {{ jugador.last_name }}</h2>
 
-      <!-- Información principal del jugador.
-           Si alguno de los datos no está disponible, se muestra un guion como fallback. -->
+      <!-- Datos del jugador -->
       <p><strong>Equipo:</strong> {{ jugador.team?.full_name || '-' }}</p>
       <p><strong>Posición:</strong> {{ jugador.position || '-' }}</p>
       <p><strong>Altura:</strong> {{ jugador.height || '-' }}</p>
@@ -43,7 +52,7 @@
       <p><strong>Ronda Draft:</strong> {{ jugador.draft_round || '-' }}</p>
       <p><strong>Posición Draft:</strong> {{ jugador.draft_number || '-' }}</p>
 
-      <!-- Si el objeto 'team' existe, se mostrará también detalles adicionales del equipo -->
+      <!-- Información adicional del equipo -->
       <div *ngIf="jugador.team">
         <p><strong>Ciudad del equipo:</strong> {{ jugador.team.city || '-' }}</p>
         <p><strong>División:</strong> {{ jugador.team.division || '-' }}</p>
@@ -51,9 +60,10 @@
       </div>
     </div>
 
-    <!-- En caso de que no se encuentre el jugador (por ID incorrecto o fallo de API) -->
+    <!-- Si no se ha encontrado el jugador (por error o ID incorrecto) -->
     <div *ngIf="!cargando && !jugador">
       <p>No se encontró el jugador.</p>
     </div>
+
   </div>
 </ion-content>

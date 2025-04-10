@@ -1,7 +1,4 @@
 // Servicio: native.service.ts
-// Este servicio encapsula el uso de funcionalidades nativas con Capacitor.
-// Permite abrir la cámara (solo Android) y compartir texto (Android y web).
-
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
@@ -11,23 +8,30 @@ export class NativeService {
 
   constructor() {}
 
-  // Método que abre la cámara y devuelve la imagen tomada
+  // ✅ Esta versión cumple exactamente lo que pediste
   async abrirCamara(): Promise<string | null> {
     try {
+      const isWeb = !/(Android|iPhone|iPad|iPod)/i.test(navigator.userAgent);
+
       const photo = await Camera.getPhoto({
-        resultType: CameraResultType.DataUrl, // Devolvemos la foto como base64
-        source: CameraSource.Camera,         // Abrimos directamente la cámara
-        quality: 80                           // Calidad media para rendimiento
+        resultType: CameraResultType.DataUrl, // base64 para mostrar directamente
+        source: isWeb ? CameraSource.Photos : CameraSource.Prompt, // 🎯 Web solo galería, móvil galería o cámara
+        quality: 50 // calidad media para evitar errores en Android
       });
 
-      return photo.dataUrl ?? null; // Devolvemos la imagen como string base64
+      return photo.dataUrl ?? null;
+
     } catch (error) {
       console.error('Error al usar la cámara:', error);
+
+      if (!/(Android|iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
+        alert('⚠️ No se pudo seleccionar una imagen. Usa un navegador compatible.');
+      }
+
       return null;
     }
   }
 
-  // Método que permite compartir un mensaje con el sistema nativo
   async compartirJugador(nombreCompleto: string) {
     try {
       await Share.share({
